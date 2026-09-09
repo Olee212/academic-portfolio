@@ -41,6 +41,7 @@ export const profile = {
   },
   // CV download button — drop your PDF into /public and update the path.
   cvUrl: "/cv-ahnaf-rashid-olee.pdf",
+  photo: "/images/ahnaf-rashid-olee.jpg",
 }
 
 /* ------------------------------------------------------------------ */
