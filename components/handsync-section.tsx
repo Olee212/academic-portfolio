@@ -1,6 +1,6 @@
-import Image from 'next/image'
 import { ArrowUpRight, Check, Sparkles } from 'lucide-react'
 import { handsync } from '@/lib/data'
+import { withBase } from '@/lib/utils'
 import { Reveal } from '@/components/reveal'
 
 export function HandSyncSection() {
@@ -81,12 +81,10 @@ export function HandSyncSection() {
               rel="noopener noreferrer"
               className="group relative mx-auto block aspect-3/4 max-w-sm overflow-hidden rounded-xl border border-primary-foreground/15 bg-primary-foreground/5"
             >
-              <Image
-                src={handsync.image || '/placeholder.svg'}
+              <img
+                src={withBase(handsync.image || '/placeholder.svg')}
                 alt="HandSync privacy-first gloves worn on a hand that convert sign language to speech"
-                fill
-                sizes="(max-width: 1024px) 100vw, 40vw"
-                className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
               />
             </a>
           </Reveal>

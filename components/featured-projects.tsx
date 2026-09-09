@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { featured } from '@/lib/data'
 import { withBase } from '@/lib/utils'
 import { Reveal } from '@/components/reveal'
@@ -26,12 +25,10 @@ export function FeaturedProjects() {
                   i % 2 === 1 ? 'md:order-2' : ''
                 }`}
               >
-                <Image
-                  src={project.image || '/placeholder.svg'}
+                <img
+                  src={withBase(project.image || '/placeholder.svg')}
                   alt={`${project.title} — project visual`}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 40vw"
-                  className="object-contain p-3"
+                  className="absolute inset-0 h-full w-full object-contain p-3"
                 />
                 <span className="absolute right-3 bottom-3 rounded-md bg-primary/85 px-2 py-1 text-xs font-medium text-primary-foreground opacity-0 transition-opacity group-hover:opacity-100">
                   View full image
