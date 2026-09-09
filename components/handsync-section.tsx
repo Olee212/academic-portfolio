@@ -56,12 +56,6 @@ export function HandSyncSection() {
             </Reveal>
 
             <Reveal delay={300}>
-              <p className="mt-7 rounded-md border border-primary-foreground/15 bg-primary-foreground/5 p-4 text-sm leading-relaxed text-primary-foreground/70">
-                {handsync.grantNote}
-              </p>
-            </Reveal>
-
-            <Reveal delay={360}>
               <a
                 href={handsync.url}
                 target="_blank"

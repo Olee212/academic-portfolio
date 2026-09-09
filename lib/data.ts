@@ -67,7 +67,7 @@ export const about = {
 /* HANDSYNC — Dedicated startup section                                */
 /* ------------------------------------------------------------------ */
 export const handsync = {
-  label: "Founder, HandSync",
+  label: "Co-founder, HandSync",
   wordmark: "HandSync",
   fullName: "HandsOnSync",
   tagline: "Privacy-first wearable that turns sign language into speech.",
@@ -80,8 +80,6 @@ export const handsync = {
     "Supports ASL, BSL, ISL, BdSL and other mapped sign languages",
     "Native Android and iOS apps",
   ],
-  grantNote:
-    "Received a grant from the Research and Innovation Centre for Science and Engineering (RISE), BUET, for startup support.",
   url: "https://www.handsync.org/",
   image: "/images/handsync.png",
 }
