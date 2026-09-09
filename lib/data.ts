@@ -50,7 +50,7 @@ export const about = {
   paragraphs: [
     "My undergraduate thesis develops a framework for engineering barrier-free ohmic contacts to two-dimensional semiconductors using metallic van der Waals electrodes. Using density functional theory (DFT), I investigate how contact geometry and electrode chemistry govern Schottky barrier formation, with the goal of optimizing electrical contacts for the next generation of atomically-thin transistors.",
     "Beyond the device level, I am drawn to human-aided devices and applied hardware–AI systems. I build working hardware prototypes end to end — embedded systems, sensors, actuators, and on-device intelligence.",
-    "This dual footing motivates two parallel PhD tracks I am pursuing: (1) fabrication and characterization of 2D and wide-bandgap semiconductor devices, and (2) robotics and flexible/wearable sensors, where my hands-on hardware experience connects naturally to flexible electronics.",
+    "This dual footing motivates my interest in two PhD directions: (1) fabrication and characterization of 2D and wide-bandgap semiconductor devices, and (2) robotics and flexible/wearable sensors, where my hands-on hardware experience connects naturally to flexible electronics.",
   ],
   // Short pull-quote / research focus tags shown alongside the statement.
   focusAreas: [
