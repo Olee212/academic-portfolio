@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { Download, Menu, X } from 'lucide-react'
 import { navItems, profile } from '@/lib/data'
-import { cn } from '@/lib/utils'
+import { cn, withBase } from '@/lib/utils'
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -50,7 +50,7 @@ export function Navbar() {
             </a>
           ))}
           <a
-            href={profile.cvUrl}
+            href={withBase(profile.cvUrl)}
             className="inline-flex items-center gap-2 rounded-md bg-primary px-3.5 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
           >
             <Download className="size-4" aria-hidden="true" />
@@ -83,7 +83,7 @@ export function Navbar() {
               </a>
             ))}
             <a
-              href={profile.cvUrl}
+              href={withBase(profile.cvUrl)}
               onClick={() => setOpen(false)}
               className="mt-2 inline-flex items-center justify-center gap-2 rounded-md bg-primary px-3.5 py-2.5 text-sm font-medium text-primary-foreground"
             >

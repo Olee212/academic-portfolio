@@ -1,5 +1,6 @@
 import { Mail, Phone, Download, ArrowUpRight, UserRound } from 'lucide-react'
 import { profile, references, referencesNote } from '@/lib/data'
+import { withBase } from '@/lib/utils'
 import { Reveal } from '@/components/reveal'
 import { LinkedinIcon } from '@/components/icons'
 import { SectionHeading } from '@/components/section-heading'
@@ -69,7 +70,7 @@ export function ReferencesFooter() {
 
           <Reveal delay={160}>
             <a
-              href={profile.cvUrl}
+              href={withBase(profile.cvUrl)}
               className="mt-8 inline-flex items-center gap-2 rounded-md bg-accent px-5 py-3 text-sm font-medium text-accent-foreground transition-opacity hover:opacity-90"
             >
               <Download className="size-4" aria-hidden="true" />

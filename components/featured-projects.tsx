@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { featured } from '@/lib/data'
+import { withBase } from '@/lib/utils'
 import { Reveal } from '@/components/reveal'
 import { SectionHeading } from '@/components/section-heading'
 
@@ -17,7 +18,7 @@ export function FeaturedProjects() {
           <Reveal key={project.title} delay={i * 60}>
             <article className="grid gap-0 overflow-hidden rounded-xl border border-border bg-card md:grid-cols-5">
               <a
-                href={project.image || '/placeholder.svg'}
+                href={withBase(project.image || '/placeholder.svg')}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`${project.title} — open full image`}
