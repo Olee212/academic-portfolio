@@ -19,9 +19,9 @@ export default function Page() {
         <About />
         <HandSyncSection />
         <FeaturedProjects />
-        <OtherProjects />
-        <Publications />
         <Experience />
+        <Publications />
+        <OtherProjects />
         <EducationSkills />
         <Awards />
         <ReferencesFooter />

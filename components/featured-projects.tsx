@@ -1,3 +1,4 @@
+import { ArrowUpRight } from 'lucide-react'
 import { featured } from '@/lib/data'
 import { withBase } from '@/lib/utils'
 import { Reveal } from '@/components/reveal'
@@ -59,6 +60,17 @@ export function FeaturedProjects() {
                   <span className="text-muted-foreground">Impact — </span>
                   {project.outcome}
                 </p>
+                {'url' in project && project.url ? (
+                  <a
+                    href={project.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline"
+                  >
+                    View project
+                    <ArrowUpRight className="size-4" aria-hidden="true" />
+                  </a>
+                ) : null}
               </div>
             </article>
           </Reveal>

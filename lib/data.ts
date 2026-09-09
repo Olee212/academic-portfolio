@@ -35,9 +35,9 @@ export const profile = {
   highlight: "Two projects selected for BEAR Summit 2026",
   // Contact links — update hrefs freely. Leave a field empty ("") to hide it.
   contacts: {
-    email: "ahnaf.olee@example.com", // TODO: replace with real email
+    email: "ahnafolee18@gmail.com",
     phone: "+880 1XXX-XXXXXX", // TODO: replace with real phone
-    linkedin: "https://www.linkedin.com/in/ahnaf-rashid-olee", // TODO: replace with real LinkedIn
+    linkedin: "https://www.linkedin.com/in/ahnaf-rashid-olee-6126a3163/",
   },
   // CV download button — drop your PDF into /public and update the path.
   cvUrl: "/cv-ahnaf-rashid-olee.pdf",
@@ -49,7 +49,7 @@ export const profile = {
 export const about = {
   paragraphs: [
     "My undergraduate thesis develops a framework for engineering barrier-free ohmic contacts to two-dimensional semiconductors using metallic van der Waals electrodes. Using density functional theory (DFT), I investigate how contact geometry and electrode chemistry govern Schottky barrier formation, with the goal of optimizing electrical contacts for the next generation of atomically-thin transistors.",
-    "Beyond the device level, I am drawn to human-aided devices and applied hardware–AI systems. I am equally comfortable simulating and modeling materials (DFT via Quantum Espresso and Quantum ATK) and building working hardware prototypes end to end — embedded systems, sensors, actuators, and on-device intelligence.",
+    "Beyond the device level, I am drawn to human-aided devices and applied hardware–AI systems. I build working hardware prototypes end to end — embedded systems, sensors, actuators, and on-device intelligence.",
     "This dual footing motivates two parallel PhD tracks I am pursuing: (1) fabrication and characterization of 2D and wide-bandgap semiconductor devices, and (2) robotics and flexible/wearable sensors, where my hands-on hardware experience connects naturally to flexible electronics.",
   ],
   // Short pull-quote / research focus tags shown alongside the statement.
@@ -107,14 +107,16 @@ export const featured = [
     tags: ["Instrumentation", "Data Acquisition", "Signal Processing", "Sensor Calibration"],
     outcome: "Ongoing instrumentation and sensor-systems research.",
     image: "/images/seismic.png",
+    url: "http://blcasn.tech/post/project-team-2026/",
   },
   {
     title: "AI-Driven Fabric Defect Detection",
     subtitle: "Smart Garments Manufacturing",
     description:
-      "An AI vision system that detects fabric defects on production lines for smart garments manufacturing. Completed a proof of concept validated for industrial deployment, combining applied computer vision with manufacturing quality assurance.",
+      "An AI vision system that detects fabric defects on production lines for smart garments manufacturing. The project was funded by Saturn Textiles, and an MoU was signed between IRAB, BUET and Saturn Textiles. Completed a proof of concept validated for industrial deployment, combining applied computer vision with manufacturing quality assurance.",
     tags: ["Computer Vision", "Deep Learning", "Manufacturing QA", "Edge Deployment"],
-    outcome: "Proof of concept validated for industrial deployment.",
+    outcome:
+      "Funded by Saturn Textiles; MoU signed between IRAB, BUET and Saturn Textiles. Proof of concept validated for industrial deployment.",
     image: "/images/fabric-defect.png",
   },
 ]
@@ -209,12 +211,16 @@ export const education = [
 /* AWARDS & RECOGNITION                                                */
 /* ------------------------------------------------------------------ */
 export const awards = [
-  { title: "Dean's Award", note: "For outstanding academic performance, BUET" },
   {
     title: "Two projects selected for BEAR Summit 2026",
-    note: "Bangladesh Engineering & Applied Research Summit",
+    note: "Biotechnology, Electronics, Artificial Intelligence, and Robotics Summit",
     highlight: true,
   },
+  {
+    title: "RISE, BUET startup grant",
+    note: "Received a grant from the Research and Innovation Centre for Science and Engineering (RISE), BUET, for startup support.",
+  },
+  { title: "Dean's Award", note: "For outstanding academic performance, BUET" },
   {
     title: "Invited — \u201CYouth, Start up and Promising Bangladesh\u201D",
     note: "By the ICT Division",
@@ -267,8 +273,8 @@ export const navItems = [
   { label: "About", id: "about" },
   { label: "Startup", id: "startup" },
   { label: "Projects", id: "projects" },
-  { label: "Publications", id: "publications" },
   { label: "Experience", id: "experience" },
+  { label: "Publications", id: "publications" },
   { label: "Awards", id: "awards" },
   { label: "Contact", id: "contact" },
 ]
