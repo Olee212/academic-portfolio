@@ -216,6 +216,10 @@ export const awards = [
     highlight: true,
   },
   {
+    title: "BUET Innovation Fair 2026",
+    note: "Showcased Development of BUET Low-Cost Geo-Seismic Instrumentation — accelerometer, seismic network, tiltmeter, inclinometer, and shake table. Joint work of CE and EEE, BUET.",
+  },
+  {
     title: "RISE, BUET startup grant",
     note: "Received a grant from the Research and Innovation Centre for Science and Engineering (RISE), BUET, for startup support.",
   },
