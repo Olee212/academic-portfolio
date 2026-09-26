@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Adaptive traffic controller — Fall 2027</title>
+  <style>
+    :root {
+      --bg: #0c1117;
+      --panel: #151c24;
+      --line: #2a3542;
+      --text: #e8eef4;
+      --muted: #8b9aab;
+      --red: #d94a4a;
+      --yel: #e0b341;
+      --grn: #2f9e5f;
+      --off: #3a4450;
+      --accent: #4d8ec9;
+      --cam: #c27a3a;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.5 "Segoe UI", system-ui, sans-serif; }
+    header {
+      padding: 22px 28px 14px; border-bottom: 1px solid var(--line);
+      display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    }
+    header h1 { margin: 0; font-size: 24px; font-weight: 650; }
+    header p { margin: 4px 0 0; color: var(--muted); }
+    .badge { color: var(--accent); font-size: 12px; letter-spacing: 0.07em; text-transform: uppercase; }
+    nav {
+      position: sticky; top: 0; z-index: 5; background: #0c1117ee;
+      border-bottom: 1px solid var(--line); padding: 8px 28px;
+      display: flex; gap: 8px; flex-wrap: wrap;
+    }
+    nav a {
+      color: var(--muted); text-decoration: none; font-size: 13px;
+      padding: 6px 10px; border: 1px solid transparent; border-radius: 4px;
+    }
+    nav a:hover, nav a.on { color: var(--text); border-color: var(--line); background: var(--panel); }
+    main { padding: 18px 28px 40px; display: grid; gap: 16px; }
+    section.card {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 18px 20px;
+    }
+    h2 { margin: 0 0 6px; font-size: 18px; }
+    h3 { margin: 14px 0 8px; font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .lead { color: var(--muted); margin: 0 0 14px; }
+    .cols { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 16px; }
+    .cols3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+    @media (max-width: 980px) { .cols, .cols3 { grid-template-columns: 1fr; } }
+    .pipe {
+      display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin: 8px 0 4px;
+    }
+    @media (max-width: 1100px) { .pipe { grid-template-columns: 1fr 1fr; } }
+    .node {
+      background: #10171e; border: 1px solid var(--line); border-radius: 6px; padding: 10px;
+      min-height: 86px;
+    }
+    .node b { display: block; font-size: 13px; }
+    .node span { color: var(--muted); font-size: 12px; }
+    .node.cam { border-color: #6a4a28; }
+    .node.pcb { border-color: #2d5a3c; }
+    .node.fw { border-color: #2d4a6a; }
+    .kpi { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    @media (max-width: 800px) { .kpi { grid-template-columns: 1fr 1fr; } }
+    .kpi div { background: #10171e; border: 1px solid var(--line); border-radius: 5px; padding: 10px; }
+    .kpi b { display: block; font-size: 18px; }
+    .kpi span { color: var(--muted); font-size: 12px; }
+    ul.tight { margin: 0; padding-left: 18px; }
+    ul.tight li { margin: 4px 0; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th, td { text-align: left; padding: 5px 4px; border-bottom: 1px solid var(--line); }
+    th { color: var(--muted); font-weight: 600; }
+    figure.shot { margin: 0; }
+    figure.shot img {
+      display: block; width: 100%; height: auto; border-radius: 6px;
+      border: 1px solid var(--line); background: #fff;
+    }
+    figure.shot figcaption { margin-top: 8px; color: var(--muted); font-size: 12px; }
+    figure.shot.gui img { background: #111; }
+    .xroad { position: relative; height: 340px; background: #12181f; border-radius: 6px; overflow: hidden; }
+    .road-h, .road-v { position: absolute; background: #2c333c; }
+    .road-h { left: 0; right: 0; top: 50%; height: 80px; transform: translateY(-50%); }
+    .road-v { top: 0; bottom: 0; left: 50%; width: 80px; transform: translateX(-50%); }
+    .island { position: absolute; left: 50%; top: 50%; width: 80px; height: 80px; transform: translate(-50%,-50%); background: #1a222b; border: 1px solid #3a4552; }
+    .head {
+      position: absolute; width: 16px; padding: 4px 3px; background: #0c1014; border-radius: 3px;
+      display: flex; flex-direction: column; gap: 3px; align-items: center;
+    }
+    .head.n { left: 50%; top: 24px; transform: translateX(48px); }
+    .head.s { left: 50%; bottom: 24px; transform: translateX(-64px); }
+    .head.e { top: 50%; right: 24px; transform: translateY(48px); }
+    .head.w { top: 50%; left: 24px; transform: translateY(-64px); }
+    .lamp { width: 9px; height: 9px; border-radius: 50%; background: var(--off); }
+    .lamp.on-r { background: var(--red); box-shadow: 0 0 7px var(--red); }
+    .lamp.on-y { background: var(--yel); box-shadow: 0 0 7px var(--yel); }
+    .lamp.on-g { background: var(--grn); box-shadow: 0 0 7px var(--grn); }
+    .lab { position: absolute; font-size: 11px; color: var(--muted); }
+    .lab.n { top: 8px; left: 50%; transform: translateX(-50%); }
+    .lab.s { bottom: 8px; left: 50%; transform: translateX(-50%); }
+    .lab.e { right: 8px; top: 50%; transform: translateY(-50%); }
+    .lab.w { left: 8px; top: 50%; transform: translateY(-50%); }
+    .camdot {
+      position: absolute; width: 10px; height: 10px; border-radius: 2px; background: var(--cam);
+      box-shadow: 0 0 8px var(--cam);
+    }
+    .camdot.n { top: 18px; left: calc(50% + 52px); }
+    .camdot.s { bottom: 18px; left: calc(50% - 62px); }
+    .camdot.e { right: 18px; top: calc(50% + 52px); }
+    .camdot.w { left: 18px; top: calc(50% - 62px); }
+    .ped { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); font-size: 11px; color: var(--muted); text-align: center; width: 76px; }
+    .ped strong { display: block; color: var(--text); margin-top: 3px; }
+    .track { position: relative; margin: 8px 0 10px; }
+    .bar { display: flex; height: 26px; border-radius: 4px; overflow: hidden; }
+    .bar span { display: flex; align-items: center; justify-content: center; font-size: 10px; color: #111; font-weight: 650; }
+    .bar .a { background: #3d9b62; } .bar .b { background: #4aa3c7; }
+    .bar .c { background: #c7a14a; } .bar .d { background: #c76b4a; }
+    .bar .p { background: #8a7ad6; color: #fff; }
+    .cursor { position: absolute; top: 0; bottom: 0; width: 2px; background: #fff; }
+    .cams { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .feed {
+      background: #10171e; border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px;
+    }
+    .feed label { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); }
+    .feed input { width: 100%; margin-top: 6px; }
+    .feed .count { color: var(--text); font-weight: 650; }
+    button {
+      background: #243040; color: var(--text); border: 1px solid var(--line);
+      border-radius: 5px; padding: 8px 12px; cursor: pointer; font: inherit;
+    }
+    button:hover { border-color: var(--accent); }
+    button.pri { background: #1d3d28; border-color: #3d7a52; }
+    button.danger { border-color: #7a3030; }
+    .row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+    .note { color: var(--muted); font-size: 13px; }
+    code { color: #c5d4e4; }
+    footer { padding: 0 28px 28px; color: var(--muted); font-size: 13px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <div class="badge">Fall 2027 · faculty walkthrough</div>
+      <h1>Adaptive intersection controller</h1>
+      <p>Custom PCB · Nucleo-F767ZI firmware · MQTT network · operator GUI · camera-driven plans</p>
+    </div>
+    <div style="text-align:right">
+      <div class="badge" id="clock">--:--:--</div>
+      <p>Shahbagh / STM-LAB · offline demo, no broker needed</p>
+    </div>
+  </header>
+  <nav>
+    <a href="#stack">Full stack</a>
+    <a href="#pcb">PCB</a>
+    <a href="#fw">Firmware</a>
+    <a href="#net">Network</a>
+    <a href="#live">Adaptive GUI</a>
+  </nav>
+
+  <main>
+    <section class="card" id="stack">
+      <h2>One site, four layers of work</h2>
+      <p class="lead">Cameras count vehicles. The server writes a timing plan. The MCU only executes it. The PCB turns bits into 12 V lamps.</p>
+      <div class="pipe">
+        <div class="node cam"><b>1. Cameras</b><span>Per-approach images. Counts stay off the STM VLAN.</span></div>
+        <div class="node"><b>2. Vision + GUI</b><span>Queue / density → green split. Tablet can still edit.</span></div>
+        <div class="node"><b>3. Go backend</b><span>JSON in. Compact binary plan out.</span></div>
+        <div class="node"><b>4. Mosquitto</b><span>device/{id}/plan · heartbeat · time</span></div>
+        <div class="node fw"><b>5. STM firmware</b><span>LwIP + MQTT. PLAN[] ticks 1 s.</span></div>
+        <div class="node pcb"><b>6. TC2/TC3 PCB</b><span>I2C expanders → ULN → 32 relays</span></div>
+        <div class="node pcb"><b>7. Lamps</b><span>A/B/C/D + ped + left + filters</span></div>
+      </div>
+      <div class="kpi" style="margin-top:14px">
+        <div><span>MCU</span><b>Nucleo-F767ZI</b></div>
+        <div><span>Relays</span><b>32 × 12 V</b></div>
+        <div><span>Default cycle</span><b>107 s</b></div>
+        <div><span>Plan wire</span><b>68 / 152 B</b></div>
+      </div>
+    </section>
+
+    <section class="card" id="pcb">
+      <h2>PCB — TC2 / TC3 carrier</h2>
+      <p class="lead">Altium carrier under a Nucleo-144. The MCU module plugs in. Lamp power, expanders, sensors, and field headers live on our board.</p>
+      <div class="cols">
+        <div>
+          <figure class="shot">
+            <img src="tc3-pcb.png" alt="TC3 Smart Traffic Controller carrier board, 3D render" />
+            <figcaption>TC3 carrier — 32 lamp outputs on top, Nucleo cutout on the right, 7-seg / status on the left. Nucleo-F767ZI plugs into the white socket area.</figcaption>
+          </figure>
+        </div>
+        <div>
+          <h3>What we designed</h3>
+          <ul class="tight">
+            <li><b>Power:</b> 12 V site supply, on-board 5 V / 3.3 V, TVS on sensor rails.</li>
+            <li><b>MCU socket:</b> Nucleo-144 Morpho (F429 footprint, F767 plugged in). JP3 = E5V.</li>
+            <li><b>Lamp path:</b> I2C1 → two MCP23017 → four ULN2803 → 32 relays. DIP sets 0x20 / 0x21.</li>
+            <li><b>Sense:</b> current clamp on PA3, humidity on PA0, spare ADC on PC0.</li>
+            <li><b>Comms headers:</b> SPI3, USART6, CAN logic (PD0/PD1) plus I2C. Status LED PE13.</li>
+          </ul>
+          <p class="note" style="margin:10px 0 0">Cameras are <b>not</b> on this PCB. Images stay on the site camera LAN; only the resulting plan arrives as MQTT.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" id="fw">
+      <h2>STM firmware</h2>
+      <p class="lead">CubeIDE project in <code>firmware/</code>. The chip is a cycle engine, not a vision box.</p>
+      <div class="cols3">
+        <div>
+          <h3>Boot, no PC needed</h3>
+          <ul class="tight">
+            <li>Self-test relay 1 then 17.</li>
+            <li>Compiled PLAN[]: A/B/C/D 20+3 s, ped 15 s, cycle 107 s.</li>
+            <li>DHCP, print IP on UART 115200.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Once on the wire</h3>
+          <ul class="tight">
+            <li>LwIP MQTT client <code>stm32-nucleo</code>.</li>
+            <li>Ids <code>SHAHBAGH</code> and <code>STM-LAB1</code>.</li>
+            <li>Accepts JSON, TC1 68-byte, or HTML SET_PLAN 152-byte.</li>
+            <li>Writes timings into PLAN[], ticks 1 s, bit-reverses for the PCB.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>If the network dies</h3>
+          <ul class="tight">
+            <li>60 s without MQTT → morning / noon / night defaults.</li>
+            <li>Clock from NTP (Dhaka +6) or MQTT <code>/time</code>.</li>
+            <li>Heartbeat ~1 s for the GUI. Does not drive lamps.</li>
+          </ul>
+        </div>
+      </div>
+      <h3>PLAN[] → relays</h3>
+      <table>
+        <thead><tr><th>Signal</th><th>Relays R/G/A</th><th>Default start</th><th>Green</th><th>Yellow</th></tr></thead>
+        <tbody>
+          <tr><td>road_a</td><td>1 / 2 / 3</td><td>0</td><td>20</td><td>3</td></tr>
+          <tr><td>road_b</td><td>4 / 5 / 6</td><td>23</td><td>20</td><td>3</td></tr>
+          <tr><td>road_c</td><td>7 / 8 / 9</td><td>46</td><td>20</td><td>3</td></tr>
+          <tr><td>road_d</td><td>10 / 11 / 12</td><td>69</td><td>20</td><td>3</td></tr>
+          <tr><td>left_lane</td><td>13 / 14 / 15</td><td colspan="3">inverse of pedestrian</td></tr>
+          <tr><td>pedestrian</td><td>16 / 17</td><td>92</td><td>15</td><td>0</td></tr>
+          <tr><td>filters a–d</td><td>18–21</td><td colspan="3">green 0 unless the server sets them</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card" id="net">
+      <h2>Networking + operator GUI</h2>
+      <p class="lead">Shahbagh-style junction: Motsho Bhaban, Intercontinental, Kataban, TSC, then all-walk. The timetable is one cycle — each row is a road, the playhead is “now.”</p>
+      <figure class="shot gui" style="margin-bottom:16px">
+        <img src="gui-timetable.png" alt="Operator GUI: Shahbagh junction map and one-cycle timetable" />
+        <figcaption>Live GUI idea — map on the left, Gantt timetable on the right. Green / amber / red / pedestrian. Tablet edits here; Go publishes MQTT; firmware only runs PLAN[].</figcaption>
+      </figure>
+      <p class="lead">The tablet never talks to the MCU as a web server. Everything is HTTP to Go, then MQTT to the box.</p>
+      <div class="cols">
+        <div>
+          <h3>Topics</h3>
+          <table>
+            <thead><tr><th>Topic</th><th>Dir</th><th>Job</th></tr></thead>
+            <tbody>
+              <tr><td><code>device/{id}/register</code></td><td>STM →</td><td>I exist</td></tr>
+              <tr><td><code>device/{id}/request_plan</code></td><td>STM →</td><td>Send active plan</td></tr>
+              <tr><td><code>device/{id}/plan</code></td><td>→ STM</td><td>Timings / override</td></tr>
+              <tr><td><code>device/{id}/time</code></td><td>→ STM</td><td>Dhaka clock</td></tr>
+              <tr><td><code>device/{id}/heartbeat</code></td><td>STM →</td><td>Phase for GUI</td></tr>
+              <tr><td><code>device/{id}/plan_ack</code></td><td>STM →</td><td>Cycle + seq</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <h3>Why the MCU stays small</h3>
+          <ul class="tight">
+            <li>GUI and cameras produce JSON.</li>
+            <li>Go packs a 68-byte TC1 or 152-byte SET_PLAN frame + CRC.</li>
+            <li>Lab broker typically <code>192.168.1.184:1883</code>.</li>
+            <li>City scale: private routed fiber, 1883 not on the public internet. Cameras on their own VLAN.</li>
+          </ul>
+          <p class="note" style="margin:10px 0 0">Operator actions: resume, all-red, flash, timed hold. Same opcodes the tablet already sends.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" id="live">
+      <h2>Live: cameras set the plan</h2>
+      <p class="lead">Move the sliders as if each camera just counted that approach. Push plan — greens scale with demand. Pedestrian stays fixed. This is the adaptive loop; the MCU only receives the new PLAN[].</p>
+      <div class="cols">
+        <div>
+          <div class="xroad">
+            <div class="road-h"></div><div class="road-v"></div><div class="island"></div>
+            <div class="lab n">Intercontinental</div><div class="lab s">TSC</div><div class="lab e">Motsho Bhaban</div><div class="lab w">Kataban</div>
+            <div class="camdot n" title="cam C"></div>
+            <div class="camdot s" title="cam A"></div>
+            <div class="camdot e" title="cam B"></div>
+            <div class="camdot w" title="cam D"></div>
+            <div class="head n" data-road="c"><i class="lamp" data-c="r"></i><i class="lamp" data-c="y"></i><i class="lamp" data-c="g"></i></div>
+            <div class="head s" data-road="a"><i class="lamp" data-c="r"></i><i class="lamp" data-c="y"></i><i class="lamp" data-c="g"></i></div>
+            <div class="head e" data-road="b"><i class="lamp" data-c="r"></i><i class="lamp" data-c="y"></i><i class="lamp" data-c="g"></i></div>
+            <div class="head w" data-road="d"><i class="lamp" data-c="r"></i><i class="lamp" data-c="y"></i><i class="lamp" data-c="g"></i></div>
+            <div class="ped">PED<strong id="pedState">DON'T WALK</strong><span id="leftState">LEFT green</span></div>
+          </div>
+          <h3>Compiled cycle <span id="cycLab">107 s</span></h3>
+          <div class="track">
+            <div class="bar" id="gantt"></div>
+            <div class="cursor" id="cursor"></div>
+          </div>
+          <table>
+            <thead><tr><th>Signal</th><th>Start</th><th>Green</th><th>Yellow</th><th>Now</th></tr></thead>
+            <tbody id="planRows"></tbody>
+          </table>
+        </div>
+        <div>
+          <h3>Camera counts (vehicles in view)</h3>
+          <div class="cams" id="cams"></div>
+          <p class="note" id="adaptNote" style="margin:10px 0 0">Source: compiled default. Green = 8–40 s from share of counts. Yellow 3 s. Ped 15 s.</p>
+          <div class="row">
+            <button type="button" class="pri" id="push">Capture images → set plan</button>
+            <button type="button" id="reset">Restore default 107 s</button>
+          </div>
+          <div class="row">
+            <button type="button" data-ovr="auto">Resume</button>
+            <button type="button" class="danger" data-ovr="allred">All red</button>
+            <button type="button" data-ovr="flash">Flash</button>
+          </div>
+          <div class="kpi" style="margin-top:12px;grid-template-columns:1fr 1fr">
+            <div><span>Phase</span><b id="tNow">0 s</b></div>
+            <div><span>Mode</span><b id="mode">AUTO</b></div>
+            <div><span>Last plan</span><b id="src">compiled</b></div>
+            <div><span>Heartbeat</span><b id="hb">A green</b></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer>
+    Open <code>demo/index.html</code> full-screen. This page is a faculty mock of the stack; live lamps need the flashed Nucleo and Mosquitto.
+  </footer>
+
+  <script>
+    const YEL = 3, PED_G = 15, MIN_G = 8, MAX_G = 40;
+    const ROADS = ["a", "b", "c", "d"];
+    const NAMES = { a: "TSC / road_a", b: "Motsho Bhaban / road_b", c: "Intercontinental / road_c", d: "Kataban / road_d", p: "all-walk" };
+    let counts = { a: 12, b: 18, c: 9, d: 7 };
+    let plan = defaultPlan();
+    let cycle = 107, t = 0, ovr = "auto", flashOn = true, src = "compiled";
+
+    function defaultPlan() {
+      return {
+        a: { start: 0, green: 20, yellow: YEL },
+        b: { start: 23, green: 20, yellow: YEL },
+        c: { start: 46, green: 20, yellow: YEL },
+        d: { start: 69, green: 20, yellow: YEL },
+        p: { start: 92, green: PED_G, yellow: 0 }
+      };
+    }
+
+    function fromCounts(c) {
+      const sum = ROADS.reduce((s, r) => s + Math.max(0, c[r]), 0) || 1;
+      const greens = {};
+      ROADS.forEach((r) => {
+        const share = Math.max(0, c[r]) / sum;
+        greens[r] = Math.max(MIN_G, Math.min(MAX_G, Math.round(8 + share * 64)));
+      });
+      let start = 0;
+      const next = {};
+      ROADS.forEach((r) => {
+        next[r] = { start, green: greens[r], yellow: YEL };
+        start += greens[r] + YEL;
+      });
+      next.p = { start, green: PED_G, yellow: 0 };
+      return { next, cycle: start + PED_G };
+    }
+
+    function colorOf(id, time) {
+      const s = plan[id];
+      if (!s) return "r";
+      if (time >= s.start && time < s.start + s.green) return "g";
+      if (s.yellow && time >= s.start + s.green && time < s.start + s.green + s.yellow) return "y";
+      return "r";
+    }
+
+    function setHead(road, col) {
+      document.querySelectorAll('.head[data-road="' + road + '"] .lamp').forEach((el) => {
+        el.className = "lamp";
+        if (col === "flash") { if (flashOn && el.dataset.c === "y") el.classList.add("on-y"); return; }
+        if (col === "allred") { if (el.dataset.c === "r") el.classList.add("on-r"); return; }
+        if (el.dataset.c === col) el.classList.add("on-" + col);
+      });
+    }
+
+    function renderCams() {
+      document.getElementById("cams").innerHTML = ROADS.map((r) =>
+        '<div class="feed"><label>Cam ' + r.toUpperCase() + ' · ' + NAMES[r].split(" / ")[0] +
+        ' <span class="count" id="cv-' + r + '">' + counts[r] + '</span></label>' +
+        '<input type="range" min="0" max="40" value="' + counts[r] + '" data-r="' + r + '"></div>'
+      ).join("");
+      document.querySelectorAll("#cams input").forEach((el) => {
+        el.addEventListener("input", () => {
+          counts[el.dataset.r] = +el.value;
+          document.getElementById("cv-" + el.dataset.r).textContent = el.value;
+        });
+      });
+    }
+
+    function renderGantt() {
+      const parts = [
+        ["a", plan.a.green + plan.a.yellow, "A " + (plan.a.green + plan.a.yellow) + "s"],
+        ["b", plan.b.green + plan.b.yellow, "B " + (plan.b.green + plan.b.yellow) + "s"],
+        ["c", plan.c.green + plan.c.yellow, "C " + (plan.c.green + plan.c.yellow) + "s"],
+        ["d", plan.d.green + plan.d.yellow, "D " + (plan.d.green + plan.d.yellow) + "s"],
+        ["p", plan.p.green, "Ped " + plan.p.green + "s"]
+      ];
+      document.getElementById("gantt").innerHTML = parts.map((p) =>
+        '<span class="' + p[0] + '" style="flex:' + p[1] + '">' + p[2] + "</span>"
+      ).join("");
+      document.getElementById("cycLab").textContent = cycle + " s";
+    }
+
+    function paint() {
+      document.getElementById("clock").textContent = new Date().toLocaleTimeString();
+      document.getElementById("tNow").textContent = t + " / " + cycle + " s";
+      document.getElementById("cursor").style.left = (cycle ? (t / cycle * 100) : 0) + "%";
+      document.getElementById("src").textContent = src;
+      let mode = "AUTO", hb = "";
+      if (ovr === "allred") {
+        mode = "ALL-RED";
+        ROADS.forEach((r) => setHead(r, "allred"));
+        document.getElementById("pedState").textContent = "DON'T WALK";
+        document.getElementById("leftState").textContent = "LEFT red";
+        hb = "all red";
+      } else if (ovr === "flash") {
+        mode = "FLASH";
+        ROADS.forEach((r) => setHead(r, "flash"));
+        document.getElementById("pedState").textContent = "FLASH";
+        document.getElementById("leftState").textContent = "LEFT flash";
+        hb = "flash";
+      } else {
+        ROADS.forEach((r) => {
+          const c = colorOf(r, t);
+          setHead(r, c);
+          if (c !== "r") hb = r.toUpperCase() + " " + (c === "g" ? "green" : "yellow");
+        });
+        const ped = colorOf("p", t);
+        document.getElementById("pedState").textContent = ped === "g" ? "WALK" : "DON'T WALK";
+        document.getElementById("leftState").textContent = ped === "g" ? "LEFT red" : "LEFT green";
+        if (ped === "g") hb = "PED walk";
+      }
+      document.getElementById("mode").textContent = mode;
+      document.getElementById("hb").textContent = hb || "all red";
+      const rows = ["a", "b", "c", "d", "p"].map((id) => {
+        const s = plan[id];
+        let nowc = ovr === "flash" ? "y" : ovr === "allred" ? "r" : colorOf(id, t);
+        const label = nowc === "g" ? "green" : nowc === "y" ? "yellow" : "red";
+        return "<tr><td>" + NAMES[id] + "</td><td>" + s.start + "</td><td>" + s.green +
+          "</td><td>" + s.yellow + "</td><td>" + label + "</td></tr>";
+      }).join("");
+      document.getElementById("planRows").innerHTML = rows;
+    }
+
+    function applyPlan(next, cyc, label) {
+      plan = next;
+      cycle = cyc;
+      t = 0;
+      src = label;
+      ovr = "auto";
+      renderGantt();
+      paint();
+    }
+
+    document.getElementById("push").addEventListener("click", () => {
+      const { next, cycle: cyc } = fromCounts(counts);
+      applyPlan(next, cyc, "camera");
+      const bits = ROADS.map((r) => r.toUpperCase() + "=" + next[r].green + "s").join(" · ");
+      document.getElementById("adaptNote").textContent =
+        "Vision counts → JSON → Go → MQTT SET_PLAN. " + bits + " + ped " + PED_G + "s. MCU does not see images.";
+    });
+    document.getElementById("reset").addEventListener("click", () => {
+      counts = { a: 12, b: 18, c: 9, d: 7 };
+      renderCams();
+      applyPlan(defaultPlan(), 107, "compiled");
+      document.getElementById("adaptNote").textContent =
+        "Source: compiled default. Green = 8–40 s from share of counts. Yellow 3 s. Ped 15 s.";
+    });
+    document.querySelectorAll("button[data-ovr]").forEach((b) => {
+      b.addEventListener("click", () => { ovr = b.dataset.ovr; paint(); });
+    });
+
+    const links = document.querySelectorAll("nav a");
+    const secs = [...links].map((a) => document.querySelector(a.getAttribute("href")));
+    const mark = () => {
+      const y = window.scrollY + 80;
+      let cur = secs[0];
+      secs.forEach((s) => { if (s && s.offsetTop <= y) cur = s; });
+      links.forEach((a) => a.classList.toggle("on", a.getAttribute("href") === "#" + cur.id));
+    };
+    window.addEventListener("scroll", mark);
+
+    renderCams();
+    renderGantt();
+    setInterval(() => {
+      flashOn = !flashOn;
+      if (ovr === "auto") t = (t + 1) % cycle;
+      paint();
+    }, 1000);
+    paint();
+    mark();
+  </script>
+</body>
+</html>
