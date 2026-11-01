@@ -9,6 +9,7 @@
  * Quick map of what controls what:
  *   profile      -> Hero name, title, pitch, contact links, highlight badge
  *   about        -> About / Research Statement paragraphs
+ *   thesis       -> Featured thesis and manuscript details
  *   handsync     -> The dedicated Startup (HandSync) section
  *   featured     -> Featured Research & Applied Project cards
  *   otherProjects-> The smaller "Other Projects" grid
@@ -30,7 +31,7 @@ export const profile = {
   title:
     "EEE Graduate, BUET | Research Assistant & Junior Engineer | Aspiring PhD Candidate, Fall 2027",
   pitch:
-    "Bridging device-physics and fabrication of 2D & wide-bandgap semiconductors with real-world embedded hardware and applied AI systems.",
+    "Investigating composition-dependent electronic structure and interface electrostatics at 2D semiconductor contacts through density functional theory.",
   // Notable highlight shown as a badge near the top of the hero.
   highlight: "Two projects selected for BEAR Summit 2026",
   // Contact links — update hrefs freely. Leave a field empty ("") to hide it.
@@ -49,9 +50,9 @@ export const profile = {
 /* ------------------------------------------------------------------ */
 export const about = {
   paragraphs: [
-    "My undergraduate thesis develops a framework for engineering barrier-free ohmic contacts to two-dimensional semiconductors using metallic van der Waals electrodes. Using density functional theory (DFT), I investigate how contact geometry and electrode chemistry govern Schottky barrier formation, with the goal of optimizing electrical contacts for the next generation of atomically-thin transistors.",
+    "My undergraduate thesis focuses on composition-dependent electronic structure and interface electrostatics at NbₓW₁₋ₓSe₂/WSe₂ van der Waals contacts. Using density functional theory (DFT), I investigate how electrode composition influences the electronic properties of these interfaces, with the goal of informing contact engineering for two-dimensional semiconductor devices.",
     "Beyond the device level, I am drawn to human-aided devices and applied hardware–AI systems. I build working hardware prototypes end to end — embedded systems, sensors, actuators, and on-device intelligence.",
-    "This dual footing motivates my interest in two PhD directions: (1) 2D and wide-bandgap semiconductors and devices, and (2) robotics and flexible/wearable sensors, where my hands-on hardware experience connects naturally to flexible electronics.",
+    "My primary PhD research interest is semiconductor materials and devices, particularly contact engineering in two-dimensional systems. My embedded hardware experience also motivates complementary interests in flexible and wearable sensors.",
   ],
   // Short pull-quote / research focus tags shown alongside the statement.
   focusAreas: [
@@ -61,6 +62,23 @@ export const about = {
     "Flexible & wearable sensors",
     "Embedded systems",
     "Applied AI",
+  ],
+}
+
+export const thesis = {
+  title:
+    "Composition-Dependent Electronic Structure and Interface Electrostatics at NbₓW₁₋ₓSe₂/WSe₂ van der Waals Contacts",
+  authors: "Ahnaf Rashid Olee, Mahbub Alam",
+  affiliation:
+    "Department of Electrical and Electronic Engineering, Bangladesh University of Engineering and Technology (BUET), Dhaka, Bangladesh",
+  status: "Manuscript in preparation",
+  description:
+    "A density functional theory study of how composition relates to electronic structure and interface electrostatics at NbₓW₁₋ₓSe₂/WSe₂ van der Waals contacts, motivated by contact engineering for two-dimensional semiconductor devices.",
+  focusAreas: [
+    "Density functional theory",
+    "Composition-dependent electronic structure",
+    "Interface electrostatics",
+    "van der Waals contacts",
   ],
 }
 
@@ -139,6 +157,12 @@ export const otherProjects = [
 /* PUBLICATIONS — Conference papers / research contributions           */
 /* ------------------------------------------------------------------ */
 export const publications = [
+  {
+    title: thesis.title,
+    authors: thesis.authors,
+    affiliation: thesis.affiliation,
+    status: thesis.status,
+  },
   {
     title:
       "PCB-LENSE: End-to-End PCB IC Marking Recognition and Datasheet-Link Generation",
@@ -274,6 +298,7 @@ export const referencesNote = "Contact details available on request."
 /* ------------------------------------------------------------------ */
 export const navItems = [
   { label: "About", id: "about" },
+  { label: "Thesis", id: "thesis" },
   { label: "Startup", id: "startup" },
   { label: "Projects", id: "projects" },
   { label: "Experience", id: "experience" },

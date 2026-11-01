@@ -1,6 +1,7 @@
 import { Navbar } from '@/components/navbar'
 import { Hero } from '@/components/hero'
 import { About } from '@/components/about'
+import { ThesisSection } from '@/components/thesis-section'
 import { HandSyncSection } from '@/components/handsync-section'
 import { FeaturedProjects } from '@/components/featured-projects'
 import { OtherProjects } from '@/components/other-projects'
@@ -17,6 +18,7 @@ export default function Page() {
       <main>
         <Hero />
         <About />
+        <ThesisSection />
         <HandSyncSection />
         <FeaturedProjects />
         <Experience />

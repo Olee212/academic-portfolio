@@ -36,7 +36,7 @@ export function Navbar() {
           Ahnaf R. Olee
         </a>
 
-        <div className="hidden items-center gap-7 md:flex">
+        <div className="hidden items-center gap-4 lg:flex">
           {navItems.map((item) => (
             <a
               key={item.id}
@@ -61,7 +61,7 @@ export function Navbar() {
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className="inline-flex size-10 items-center justify-center rounded-md text-foreground md:hidden"
+          className="inline-flex size-10 items-center justify-center rounded-md text-foreground lg:hidden"
           aria-label={open ? 'Close menu' : 'Open menu'}
           aria-expanded={open}
         >
@@ -70,7 +70,7 @@ export function Navbar() {
       </nav>
 
       {open ? (
-        <div className="border-t border-border bg-background md:hidden">
+        <div className="border-t border-border bg-background lg:hidden">
           <div className="mx-auto flex max-w-6xl flex-col px-5 py-3">
             {navItems.map((item) => (
               <a
