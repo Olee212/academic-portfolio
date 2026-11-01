@@ -37,7 +37,6 @@ export const profile = {
   // Contact links — update hrefs freely. Leave a field empty ("") to hide it.
   contacts: {
     email: "ahnafolee18@gmail.com",
-    phone: "+880 1XXX-XXXXXX", // TODO: replace with real phone
     linkedin: "https://www.linkedin.com/in/ahnaf-rashid-olee-6126a3163/",
   },
   // CV download button — drop your PDF into /public and update the path.
@@ -50,7 +49,7 @@ export const profile = {
 /* ------------------------------------------------------------------ */
 export const about = {
   paragraphs: [
-    "My undergraduate thesis focuses on composition-dependent electronic structure and interface electrostatics at NbₓW₁₋ₓSe₂/WSe₂ van der Waals contacts. Using density functional theory (DFT), I investigate how electrode composition influences the electronic properties of these interfaces, with the goal of informing contact engineering for two-dimensional semiconductor devices.",
+    "My undergraduate thesis focuses on composition-dependent electronic structure and interface electrostatics at NbₓW₁₋ₓSe₂/WSe₂ van der Waals contacts. Using density functional theory (DFT), I investigate how electrode composition influences the electronic properties of these interfaces to guide contact engineering for two-dimensional semiconductor devices.",
     "Beyond the device level, I am drawn to human-aided devices and applied hardware–AI systems. I build working hardware prototypes end to end — embedded systems, sensors, actuators, and on-device intelligence.",
     "My primary PhD research interest is semiconductor materials and devices, particularly contact engineering in two-dimensional systems. My embedded hardware experience also motivates complementary interests in flexible and wearable sensors.",
   ],
@@ -110,7 +109,7 @@ export const featured = [
     title: "AI-Based Intelligent Traffic Signal Control System",
     subtitle: "70 Junctions, Dhaka City — Junior Engineer, BRTC (BUET)",
     description:
-      "An intelligent, AI-driven adaptive traffic signal control system designed across 70 junctions in Dhaka. The system uses real-time data to dynamically time signals, reducing congestion and improving traffic flow at city scale.",
+      "An intelligent, AI-driven adaptive traffic signal control system designed across 70 junctions in Dhaka. The system uses real-time data to dynamically time signals, reducing congestion and improving traffic flow.",
     tags: ["AI/ML", "Real-time Systems", "Computer Vision", "Civic Infrastructure"],
     outcome: "Deployed at 70 intersections — city-scale civic impact.",
     image: "/images/traffic.png",
@@ -130,7 +129,7 @@ export const featured = [
     subtitle: "Smart Garments Manufacturing",
     description:
       "An AI vision system that detects fabric defects on production lines for smart garments manufacturing. The project was funded by Saturn Textiles, and an MoU was signed between IRAB, BUET and Saturn Textiles. Completed a proof of concept validated for industrial deployment, combining applied computer vision with manufacturing quality assurance.",
-    tags: ["Computer Vision", "Deep Learning", "Manufacturing QA", "Edge Deployment"],
+    tags: [],
     outcome:
       "Funded by Saturn Textiles; MoU signed between IRAB, BUET and Saturn Textiles. Proof of concept validated for industrial deployment.",
     image: "/images/fabric-defect.png",
@@ -289,6 +288,8 @@ export const skills = {
 export const references = [
   { name: "Dr. Mahbub Alam", title: "Professor, EEE, BUET" },
   { name: "Dr. Hamidur Rahman", title: "Professor, EEE, BUET" },
+  { name: "Dr. Md Zunaid Baten", title: "Professor, EEE, BUET" },
+  { name: "Dr. Mohammad Ariful Haque", title: "Professor, EEE, BUET" },
 ]
 export const referencesNote = "Contact details available on request."
 

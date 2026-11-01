@@ -1,4 +1,4 @@
-import { Mail, Phone, Download, ArrowUpRight, UserRound } from 'lucide-react'
+import { Mail, Download, ArrowUpRight, UserRound } from 'lucide-react'
 import { profile, references, referencesNote } from '@/lib/data'
 import { withBase } from '@/lib/utils'
 import { Reveal } from '@/components/reveal'
@@ -53,11 +53,6 @@ export function ReferencesFooter() {
                 href={`mailto:${profile.contacts.email}`}
                 icon={<Mail className="size-4" aria-hidden="true" />}
                 label={profile.contacts.email}
-              />
-              <FooterLink
-                href={`tel:${profile.contacts.phone.replace(/\s/g, '')}`}
-                icon={<Phone className="size-4" aria-hidden="true" />}
-                label={profile.contacts.phone}
               />
               <FooterLink
                 href={profile.contacts.linkedin}

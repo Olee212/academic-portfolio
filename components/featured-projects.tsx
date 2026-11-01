@@ -10,7 +10,6 @@ export function FeaturedProjects() {
       <SectionHeading
         kicker="Featured Work"
         title="Research & Applied Projects"
-        description="Selected projects spanning civic-scale AI systems, instrumentation research, and applied computer vision."
       />
 
       <div className="space-y-8 md:space-y-12">
@@ -45,7 +44,7 @@ export function FeaturedProjects() {
                   {project.description}
                 </p>
 
-                <div className="mt-5 flex flex-wrap gap-2">
+                {project.tags.length > 0 ? <div className="mt-5 flex flex-wrap gap-2">
                   {project.tags.map((tag) => (
                     <span
                       key={tag}
@@ -54,7 +53,7 @@ export function FeaturedProjects() {
                       {tag}
                     </span>
                   ))}
-                </div>
+                </div> : null}
 
                 <p className="mt-5 border-t border-border pt-4 text-sm font-medium text-foreground">
                   <span className="text-muted-foreground">Impact — </span>

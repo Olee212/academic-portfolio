@@ -1,7 +1,6 @@
-import { Mail, Phone, ArrowDown } from 'lucide-react'
+import { ArrowDown } from 'lucide-react'
 import { profile } from '@/lib/data'
 import { Reveal } from '@/components/reveal'
-import { LinkedinIcon } from '@/components/icons'
 import { withBase } from '@/lib/utils'
 
 export function Hero() {
@@ -40,27 +39,6 @@ export function Hero() {
             </p>
           </Reveal>
 
-          <Reveal delay={260}>
-            <div className="mt-9 flex flex-wrap items-center gap-3">
-              <ContactLink
-                href={`mailto:${profile.contacts.email}`}
-                icon={<Mail className="size-4" aria-hidden="true" />}
-                label="Email"
-              />
-              <ContactLink
-                href={`tel:${profile.contacts.phone.replace(/\s/g, '')}`}
-                icon={<Phone className="size-4" aria-hidden="true" />}
-                label="Phone"
-              />
-              <ContactLink
-                href={profile.contacts.linkedin}
-                icon={<LinkedinIcon className="size-4" />}
-                label="LinkedIn"
-                external
-              />
-            </div>
-          </Reveal>
-
           <Reveal delay={320}>
             <a
               href="#about"
@@ -83,28 +61,5 @@ export function Hero() {
         </Reveal>
       </div>
     </section>
-  )
-}
-
-function ContactLink({
-  href,
-  icon,
-  label,
-  external,
-}: {
-  href: string
-  icon: React.ReactNode
-  label: string
-  external?: boolean
-}) {
-  return (
-    <a
-      href={href}
-      {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-      className="inline-flex items-center gap-2 rounded-md border border-primary-foreground/20 px-4 py-2 text-sm text-primary-foreground/90 transition-colors hover:border-accent hover:text-accent"
-    >
-      {icon}
-      {label}
-    </a>
   )
 }
