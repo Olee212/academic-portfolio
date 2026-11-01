@@ -91,9 +91,8 @@ export const handsync = {
   fullName: "HandsOnSync",
   tagline: "Privacy-first wearable that turns sign language into speech.",
   description:
-    "HandSync is a privacy-first wearable that converts sign language into speech using a self-hosted, on-device large language model — no cloud, no data leaving the device. It runs offline, achieves under 97 ms per token, and is built on under $50 of hardware.",
+    "HandSync is a privacy-first wearable designed to help translate sign language into speech. The project combines wearable sensors and embedded hardware to support accessible communication.",
   features: [
-    "On-device LLM — under 97 ms per token",
     "Fully offline-capable, privacy-first",
     "Under $50 in hardware cost",
     "Supports ASL, BSL, ISL, BdSL and other mapped sign languages",
