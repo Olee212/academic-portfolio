@@ -106,10 +106,10 @@ export const handsync = {
 /* ------------------------------------------------------------------ */
 export const featured = [
   {
-    title: "Traffic Signal Controller — PCB Design & Embedded Firmware",
+    title: "Smart Traffic Control System Across 70 Intersections in Dhaka City",
     subtitle: "Junior Engineer, BRTC (BUET)",
     description:
-      "Designed controller PCBs and developed embedded C firmware for an STM32F767ZI-based traffic-signal system for a project spanning 70 intersections in Dhaka City. The firmware executes signal timing plans, controls vehicle and pedestrian outputs through I²C-connected relay expanders, and synchronizes networked countdown displays. Ethernet communication using lwIP and MQTT supports remote plan updates, status reporting, and operator commands. Adaptive signal timing based on traffic conditions is under development and is not yet complete.",
+      "A national government traffic-signal project implemented through BRTC, BUET. My contribution includes controller PCB design and embedded C firmware development for an STM32F767ZI-based traffic-signal system. The firmware executes signal timing plans, controls vehicle and pedestrian outputs through I²C-connected relay expanders, and synchronizes networked countdown displays. Ethernet communication using lwIP and MQTT supports remote plan updates, status reporting, and operator commands. Adaptive signal timing based on traffic conditions is under development and is not yet complete.",
     tags: ["PCB Design", "STM32", "Embedded C", "I²C", "lwIP", "MQTT"],
     outcome: "",
     image: "/images/traffic-controller-cabinet.png",
