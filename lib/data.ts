@@ -88,7 +88,7 @@ export const handsync = {
   label: "Co-founder, HandSync",
   wordmark: "HandSync",
   fullName: "HandsOnSync",
-  tagline: "Privacy-first wearable that turns sign language into speech.",
+  tagline: "An early-stage startup developing wearable technology for sign-language-to-speech communication.",
   description:
     "HandSync is a privacy-first wearable designed to help translate sign language into speech. The project combines wearable sensors and embedded hardware to support accessible communication.",
   features: [
