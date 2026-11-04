@@ -106,12 +106,12 @@ export const handsync = {
 /* ------------------------------------------------------------------ */
 export const featured = [
   {
-    title: "AI-Based Intelligent Traffic Signal Control System",
-    subtitle: "70 Junctions, Dhaka City — Junior Engineer, BRTC (BUET)",
+    title: "Traffic Signal Controller — PCB Design & Embedded Firmware",
+    subtitle: "Dhaka City — Junior Engineer, BRTC (BUET)",
     description:
-      "An intelligent, AI-driven adaptive traffic signal control system designed across 70 junctions in Dhaka. The system uses real-time data to dynamically time signals, reducing congestion and improving traffic flow.",
-    tags: ["AI/ML", "Real-time Systems", "Computer Vision", "Civic Infrastructure"],
-    outcome: "Deployed at 70 intersections — city-scale civic impact.",
+      "Designed controller PCBs and developed embedded C firmware for an STM32F767ZI-based traffic-signal system. The firmware executes signal timing plans, controls vehicle and pedestrian outputs through I²C-connected relay expanders, and synchronizes networked countdown displays. Ethernet communication using lwIP and MQTT supports remote plan updates, status reporting, and operator commands. Adaptive signal timing based on traffic conditions is under development and is not yet complete.",
+    tags: ["PCB Design", "STM32", "Embedded C", "I²C", "Ethernet", "lwIP", "MQTT"],
+    outcome: "Controller PCB design and STM32 firmware development; adaptive control remains under development.",
     image: "/images/traffic.png",
   },
   {
@@ -184,7 +184,7 @@ export const experience = [
     org: "BRTC, BUET",
     period: "Aug 2026",
     detail:
-      "AI-based intelligent traffic signal control system across 70 junctions in Dhaka City.",
+      "PCB design and STM32 firmware development for a traffic-signal control system in Dhaka. Adaptive signal timing is under development and is not yet complete.",
   },
   {
     role: "Research Assistant",
