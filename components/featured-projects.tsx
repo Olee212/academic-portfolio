@@ -21,7 +21,7 @@ export function FeaturedProjects() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`${project.title} — open full image`}
-                className={`group relative block aspect-video bg-secondary md:col-span-2 ${
+                className={`group relative block ${i === 0 ? 'aspect-3/4' : 'aspect-video'} bg-secondary md:col-span-2 ${
                   i % 2 === 1 ? 'md:order-2' : ''
                 }`}
               >
@@ -55,10 +55,10 @@ export function FeaturedProjects() {
                   ))}
                 </div> : null}
 
-                <p className="mt-5 border-t border-border pt-4 text-sm font-medium text-foreground">
+                {project.outcome ? <p className="mt-5 border-t border-border pt-4 text-sm font-medium text-foreground">
                   <span className="text-muted-foreground">Impact — </span>
                   {project.outcome}
-                </p>
+                </p> : null}
                 {'url' in project && project.url ? (
                   <a
                     href={project.url}

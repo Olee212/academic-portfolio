@@ -107,12 +107,12 @@ export const handsync = {
 export const featured = [
   {
     title: "Traffic Signal Controller — PCB Design & Embedded Firmware",
-    subtitle: "Dhaka City — Junior Engineer, BRTC (BUET)",
+    subtitle: "Junior Engineer, BRTC (BUET)",
     description:
-      "Designed controller PCBs and developed embedded C firmware for an STM32F767ZI-based traffic-signal system. The firmware executes signal timing plans, controls vehicle and pedestrian outputs through I²C-connected relay expanders, and synchronizes networked countdown displays. Ethernet communication using lwIP and MQTT supports remote plan updates, status reporting, and operator commands. Adaptive signal timing based on traffic conditions is under development and is not yet complete.",
-    tags: ["PCB Design", "STM32", "Embedded C", "I²C", "Ethernet", "lwIP", "MQTT"],
-    outcome: "Controller PCB design and STM32 firmware development; adaptive control remains under development.",
-    image: "/images/traffic.png",
+      "Designed controller PCBs and developed embedded C firmware for an STM32F767ZI-based traffic-signal system for a project spanning 70 intersections in Dhaka City. The firmware executes signal timing plans, controls vehicle and pedestrian outputs through I²C-connected relay expanders, and synchronizes networked countdown displays. Ethernet communication using lwIP and MQTT supports remote plan updates, status reporting, and operator commands. Adaptive signal timing based on traffic conditions is under development and is not yet complete.",
+    tags: ["PCB Design", "STM32", "Embedded C", "I²C", "lwIP", "MQTT"],
+    outcome: "",
+    image: "/images/traffic-controller-cabinet.png",
   },
   {
     title: "Seismic Instrumentation Research",
