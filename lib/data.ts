@@ -51,7 +51,7 @@ export const about = {
   paragraphs: [
     "My undergraduate thesis focuses on composition-dependent electronic structure and interface electrostatics at NbₓW₁₋ₓSe₂/WSe₂ van der Waals contacts. Using density functional theory (DFT), I investigate how electrode composition influences the electronic properties of these interfaces to guide contact engineering for two-dimensional semiconductor devices.",
     "Beyond the device level, I am drawn to human-aided devices and applied hardware–AI systems. I build working hardware prototypes end to end — embedded systems, sensors, actuators, and on-device intelligence.",
-    "My primary PhD research interest is semiconductor materials and devices, particularly contact engineering in two-dimensional systems. My embedded hardware experience also motivates complementary interests in flexible and wearable sensors.",
+    "My PhD research interests include semiconductor materials and devices, particularly how electrode composition and interface electrostatics influence electrical contacts in two-dimensional semiconductors. My experience designing controller PCBs and writing embedded firmware for a traffic-signal project, along with developing an assistive wearable through HandSync, has also motivated me to pursue research in wearable sensors and flexible electronics.",
   ],
   // Short pull-quote / research focus tags shown alongside the statement.
   focusAreas: [
